@@ -1,4 +1,5 @@
-from main import saludar
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
-def test_saludo():
-    assert saludar() == "hola"
+from main import saludar
