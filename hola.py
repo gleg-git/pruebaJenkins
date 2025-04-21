@@ -1,3 +1,5 @@
-print('Hola desde Jenkins 🧪')
-#hdgksagfhadsj
-#lgfkhsafgjhafssw
+def saludar():
+    return "hola"
+
+if __name__ == "__main__":
+    print(saludar())
