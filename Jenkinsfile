@@ -1,24 +1,58 @@
 pipeline {
     agent any
 
+    environment {
+        // Definir cualquier variable de entorno si es necesario
+    }
+
     stages {
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('List files') {
+            steps {
+                // Listar los archivos en el directorio para verificar que main.py esté presente
+                sh 'ls -al'
+            }
+        }
+
         stage('Build') {
             steps {
-                sh 'python3 -m venv venv'
-                sh '. venv/bin/activate && pip install -r requirements.txt'
+                script {
+                    // Crear un entorno virtual y activar
+                    sh 'python3 -m venv venv'
+                    sh '. venv/bin/activate'
+                    // Instalar dependencias desde requirements.txt
+                    sh 'pip install -r requirements.txt'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                sh '. venv/bin/activate && python3 -m pytest'
+                script {
+                    // Activar el entorno virtual
+                    sh '. venv/bin/activate'
+                    // Ejecutar pruebas con pytest
+                    sh 'python3 -m pytest'
+                }
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Despliegue simulado'
+                // Simulación de despliegue
+                echo 'Simulando despliegue'
             }
+        }
+    }
+    post {
+        always {
+            // Limpiar entorno si es necesario
+            echo 'Pipeline finalizado.'
         }
     }
 }
